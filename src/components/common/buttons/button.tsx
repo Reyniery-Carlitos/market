@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 const buttonCustomStyles = cva(
-  "flex gap-1 items-center justify-center rounded-lg py-1 cursor-pointer",
+  "flex gap-2 items-center justify-center rounded-lg py-1 cursor-pointer",
   {
     variants: {
       type: {

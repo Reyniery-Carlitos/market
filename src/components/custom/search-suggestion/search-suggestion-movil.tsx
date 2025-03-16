@@ -42,7 +42,6 @@ export default function SearchSuggestionMovil() {
   useEffect(() => {
     if (productName && productName !== "") {
       const currentProducts = products.filter((product) => product.name.toLowerCase() === productName.toLowerCase())
-      console.log(currentProducts)
       setProductsFiltered(currentProducts)
     }
   }, [productName])
@@ -102,13 +101,13 @@ export default function SearchSuggestionMovil() {
           {
             !productName && productsFiltered.length === 0 ? (
               products.map((product) => (
-                <Card key={product.id} product={product} className="w-64" />
+                <Card key={product.id + 1456} product={product} className="w-64" />
               ))
             ) :
               productsFiltered.length === 0 ? <p className="text-sm text-text-secondary">No se encontraron productos</p>
                 : (
                   productsFiltered.map((product) => (
-                    <Card key={product.id} product={product} className="w-64" />
+                    <Card key={product.id + 342342343} product={product} className="w-64" />
                   ))
                 )
           }

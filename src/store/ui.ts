@@ -2,8 +2,11 @@ import { create } from "zustand";
 
 type NotificationType = "success" | "error" | "warning" | "info";
 
+type ProductViews = "grid" | "list"
+
 interface UiStore {
   showLateralPanel: boolean;
+  productsView: ProductViews;
   showSearchSuggestions: boolean;
   notification: {
     show: boolean;
@@ -14,6 +17,7 @@ interface UiStore {
   setShowLateralPanel: () => void;
   toggleSearchSuggestions: () => void;
   toggleNotification: (show: boolean, text: string | null, type: NotificationType) => void;
+  setProductsView: (view: ProductViews) => void;
 }
 
 export const useUiStore = create<UiStore>((set) => ({
@@ -22,10 +26,12 @@ export const useUiStore = create<UiStore>((set) => ({
   notification: {
     show: false,
     message: null,
-    type: "success" 
+    type: "success"
   },
+  productsView: "grid",
 
   setShowLateralPanel: () => set((state) => ({ showLateralPanel: !state.showLateralPanel })),
   toggleSearchSuggestions: () => set((state) => ({ showSearchSuggestions: !state.showSearchSuggestions })),
-  toggleNotification: (show: boolean, message: string | null, type: NotificationType) => set(() => ({ notification: { show, message, type } }))
+  toggleNotification: (show: boolean, message: string | null, type: NotificationType) => set(() => ({ notification: { show, message, type } })),
+  setProductsView: (view: ProductViews) => set(() => ({ productsView: view })),
 }))

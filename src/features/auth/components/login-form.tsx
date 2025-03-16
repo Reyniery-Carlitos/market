@@ -1,7 +1,8 @@
 "use client"
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { z } from "zod";
+import { useTransitionRouter } from "next-view-transitions";
 import { Controller, useForm } from "react-hook-form";
 
 import { Button } from "@/components/common"
@@ -9,14 +10,15 @@ import Icons from "@assets/icons/Icons";
 import { loginSchema } from "@/features/auth/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { users } from "@/data/users";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
+import { useUiStore } from "@/store/ui";
 
 type LoginSchemaType = z.infer<typeof loginSchema>
 
 export default function LoginForm() {
-  const router = useRouter()
-  const { login } = useAuthStore((state) => state)
+  const router = useTransitionRouter()
+  const { login, setUserAuthenticated } = useAuthStore((state) => state)
+  const toggleNotification = useUiStore((state) => state.toggleNotification)
 
   const {
     control,
@@ -36,12 +38,17 @@ export default function LoginForm() {
 
     if (user) {
       login()
+      setUserAuthenticated(user.id)
+
       router.push("/productos")
+    } else {
+      toggleNotification(true, "Usuario o contraseña incorrectos", "error")
     }
+
   }
 
   return (
-    <section className="flex justify-center items-center min-w-full min-h-screen bg-repeat">
+    <section className="flex justify-center items-center min-w-full min-h-screen">
       <form className="flex flex-col gap-6 p-5 rounded-lg w-3/12 shadow-sm bg-bg-tertiary" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col justify-center items-center" onClick={() => router.push("/")}>
           <Icons size={24} name="logo" />
@@ -86,3 +93,4 @@ const InputContainer = ({ children }: { children: React.ReactNode }) => {
     </div>
   )
 }
+

@@ -1,10 +1,10 @@
 "use client"
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 import { Button } from "@/components/common"
 import Icons from "@assets/icons/Icons";
@@ -16,7 +16,7 @@ type SignUpSchemaType = z.infer<typeof signUpSchema>;
 
 export default function SignUpForm() {
   const { toggleNotification } = useUiStore((state) => state)
-  const router = useRouter()
+  const router = useTransitionRouter()
 
   const {
     handleSubmit,

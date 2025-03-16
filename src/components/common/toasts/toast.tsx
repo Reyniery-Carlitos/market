@@ -23,9 +23,9 @@ const lateralCustomStyles = cva(
     variants: {
       type: {
         success: "bg-toast-success",
-       error: "bg-toast-error",
-       warning: "bg-toast-warning",
-       info: "bg-toast-info"
+        error: "bg-toast-error",
+        warning: "bg-toast-warning",
+        info: "bg-toast-info"
       }
     }
   }
@@ -51,17 +51,18 @@ const iconMapType: Record<string, IconName> = {
   warning: "warning-rounded",
   info: "info-rounded"
 }
-
 export default function Toast() {
   const { notification, toggleNotification } = useUiStore((state) => state)
 
   const onClose = () => toggleNotification(false, null, "success")
 
   useEffect(() => {
-    const timeout = setTimeout(() => onClose(), 2000)
+    if (notification.show) {
+      const timeout = setTimeout(() => onClose(), 2000)
+      return () => clearTimeout(timeout)
+    }
 
-    return () => clearTimeout(timeout)
-  }, [notification])
+  }, [notification.show])
 
   if (!notification.show) return null
 

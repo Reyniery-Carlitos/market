@@ -1,10 +1,10 @@
 "use client"
 
 import { usePathname } from "next/navigation";
+import { Link } from "next-view-transitions";
+import { useEffect, useState } from "react";
 
 import Icons from "@assets/icons/Icons";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export default function Breadcrumb() {
   const pathname = usePathname()
@@ -29,7 +29,7 @@ export default function Breadcrumb() {
       {
         pathnameToArr.map((path, index) => (
           path !== "" &&
-          < ListItems key={index} >
+          < ListItems key={index + 123123} >
             <Link href={`${pathnameToArr.slice(0, index + 1).join("/")}`} className="flex items-center">
               <span className="text-sm text-text-secondary"> {path.length === 0 ? "/" : path} </span>
             </Link>

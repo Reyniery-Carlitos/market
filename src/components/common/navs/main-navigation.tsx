@@ -9,6 +9,9 @@ import SearchSuggestion from "@/components/custom/search-suggestion/search-sugge
 import SearchSuggestionMovil from "@/components/custom/search-suggestion/search-suggestion-movil";
 import { useUiStore } from "@/store/ui";
 import { useForm } from "react-hook-form";
+import { useCartStore } from "@/store/cart";
+import Cart from "../cart/cart";
+import { useTransitionRouter } from "next-view-transitions";
 
 interface ISearchBar {
   productName: string;
@@ -18,7 +21,9 @@ export default function MainNavigation() {
   const { theme, setTheme } = useTheme();
   const { isAuthenticated, logout } = useAuthStore((state) => state)
   const { toggleSearchSuggestions, showSearchSuggestions } = useUiStore((state) => state)
+  const { toggleShow: toggleShowCart } = useCartStore((state) => state)
   const [productName, setProductName] = useState<string>("")
+  const router = useTransitionRouter()
 
   const {
     handleSubmit,
@@ -41,7 +46,10 @@ export default function MainNavigation() {
 
   const toggleTheme = () => theme === "dark" ? setTheme("light") : setTheme("dark");
 
-  const logoutUser = () => logout()
+  const logoutUser = () => {
+    logout()
+    router.push("/")
+  }
 
   const onSubmit = () => {
     setProductName("")
@@ -76,23 +84,25 @@ export default function MainNavigation() {
           </button>
         </li>
 
-        <li>
-          <button className="hover:bg-bg-hover p-2 rounded-full">
+        <li className="min-lg:relative">
+          <button className="hover:bg-bg-hover p-2 rounded-full" onClick={toggleShowCart}>
             <Icons name="cart" size={18} />
           </button>
+
+          <Cart />
         </li>
 
         <li>
           <button onClick={toggleTheme} className="hover:bg-bg-hover p-2 rounded-full">
-            <Icons name={theme === "dark" ? "sun" : "moon"} size={18} />
+            <Icons name={theme === "dark" ? "moon" : "moon"} size={18} />
           </button>
         </li>
 
         {
           isAuthenticated && (
             <li>
-              <button onClick={logoutUser} className="w-10 h-10 bg-bg-error text-text-error cursor-pointer rounded-full">
-                <span className="font-semibold"> CR </span>
+              <button onClick={logoutUser} className="w-7 h-7 bg-bg-error text-text-error border border-border-error cursor-pointer rounded-full flex items-center justify-center">
+                <span className="font-semibold text-xs"> CR </span>
               </button>
             </li>
           )

@@ -17,7 +17,6 @@ export default function SearchSuggestion({ productSearched }: SearchSuggestionPr
   useEffect(() => {
     if (productSearched && productSearched !== "") {
       const currentProducts = products.filter((product) => product.name.toLowerCase() === productSearched.toLowerCase())
-      console.log(currentProducts)
       setProductsFiltered(currentProducts)
     }
   }, [productSearched])

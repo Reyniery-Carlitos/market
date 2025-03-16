@@ -4,12 +4,14 @@ import { useUiStore } from "@/store/ui";
 import Icons from "@assets/icons/Icons";
 
 export default function ShowFilter() {
-  const { showLateralPanel, setShowLateralPanel } = useUiStore((state) => state)
+  const { setShowLateralPanel } = useUiStore((state) => state)
 
   return (
-    <div className="flex gap-2 items-center cursor-pointer" onClick={() => setShowLateralPanel()}>
-      <p className="text-sm"> {!showLateralPanel ? "Mostrar filtros": "Ocultar filtros"} </p>
+    <button className="flex gap-2 items-center  hover:bg-bg-hover p-2 rounded-full cursor-pointer" onClick={() => setShowLateralPanel()}>
       <Icons name="filters" size={18} />
-    </div>
+    </button>
   )
 }
+
+//<p className="text-sm"> {!showLateralPanel ? "Mostrar filtros" : "Ocultar filtros"} </p>
+

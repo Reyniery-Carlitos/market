@@ -1,7 +1,7 @@
 "use client"
 
 import { useAuthStore } from "@/store/auth";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 export default function LinkNavigation() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
